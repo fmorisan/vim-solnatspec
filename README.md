@@ -15,8 +15,15 @@ If you're using some sort of plugin manager, just add this to your init.vim
 ```vim
 Plug 'fmorisan/vim-solnatspec'
 ```
-
 And before you ask, yes - it works with both NeoVim and Vim.
+
+## Usage
+
+Put your cursor on a function's name (preferrably in its definition line) and exec  
+```
+:SolNatSpec
+```
+This will insert an already formatted NatSpec comment above your cursor. Feel free to bind this call somewhere.
 
 ## Contributing
 Just throw a PR here. Help would be great. I don't understand VimScript fully, but this was fun to hack together.
