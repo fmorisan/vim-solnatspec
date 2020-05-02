@@ -27,8 +27,8 @@ function! s:create_cmd(file, lineno, indent) abort
         \ 'python3 %s %s %d --indent %d',
         \ expand(g:natspecgen_path),
         \ expand(a:file),
-        \ expand(a:lineno),
-        \ expand(a:indent),
+        \ a:lineno,
+        \ a:indent,
         \ )
     return cmd
 endfunction
