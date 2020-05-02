@@ -21,7 +21,6 @@ let g:natspecgen_path = get(
   \ printf('%s/lib/natspecgen.py', expand('<sfile>:p:h:h'))
   \ )
 
-" NOTE: copied some things over from vim-pydocstring. Thanks!
 " Magic starts here. Calling solc --ast-json...
 function! s:create_cmd(file, symbol, indent) abort
     let cmd = printf(
