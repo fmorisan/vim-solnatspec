@@ -29,7 +29,7 @@ function! s:create_cmd(file, symbol, indent) abort
         \ expand(g:natspecgen_path),
         \ expand(a:file),
         \ expand(a:symbol),
-        \ expand(a:indent),
+        \ a:indent,
         \ )
     return cmd
 endfunction
@@ -40,15 +40,9 @@ function! solnatspec#insert(...) abort
   let line = getline('.')
   let indent = matchstr(line, '^\(\s*\)')
 
-  let space = repeat(' ', &softtabstop)
-  let indent = indent . space
-  if len(indent) == 0
-    let indent = space
-  endif
-
   let symbol = expand('<cword>')
 
-  let cmd = s:create_cmd(expand('%'), symbol, indent)
+  let cmd = s:create_cmd(expand('%'), symbol, len(indent))
 
   execute 'normal!k'
   echo cmd
