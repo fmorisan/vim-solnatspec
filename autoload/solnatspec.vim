@@ -22,7 +22,7 @@ let g:natspecgen_path = get(
 " Magic starts here. Calling solc --ast-json...
 function! s:create_cmd(file, lineno, indent) abort
     let cmd = printf(
-        \ 'python3 %s %s %d --indent %d',
+        \ '%s %s %d --indent %d',
         \ expand(g:natspecgen_path),
         \ expand(a:file),
         \ a:lineno,
