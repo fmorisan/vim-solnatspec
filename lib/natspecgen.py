@@ -7,6 +7,7 @@ import subprocess
 ap = argparse.ArgumentParser("natgenspec.py")
 ap.add_argument("file", help="File to parse with solc.")
 ap.add_argument("symbol", help="Symbol to generate natspec docs for.")
+ap.add_argument("-i", "--indent", default=0, help="Indentation level in space count.", type=int)
 
 args = ap.parse_args()
 solc_out = subprocess.check_output(['solc', '--ast-json', args.file]).decode('utf8')
@@ -52,9 +53,12 @@ def look_for_parameters(function_node):
     return parameter_list_node.get('children')
 
 
+def print_indented(string):
+    print(' '*int(args.indent) + string)
+
 symbol_node = dfs(ast_json)
 params = look_for_parameters(symbol_node)
-print(f"/// @notice")
-print(f"/// @dev")
+print_indented(f"/// @notice")
+print_indented(f"/// @dev")
 for param in params:
-    print(f"/// @param {param['attributes']['type']} {param['attributes']['name']}")
+    print_indented(f"/// @param {param['attributes']['type']} {param['attributes']['name']}")
