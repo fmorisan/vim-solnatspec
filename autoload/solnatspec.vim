@@ -22,26 +22,25 @@ let g:natspecgen_path = get(
   \ )
 
 " Magic starts here. Calling solc --ast-json...
-function! s:create_cmd(file, symbol, indent) abort
+function! s:create_cmd(file, lineno, indent) abort
     let cmd = printf(
         \ 'python3 %s %s %s --indent %d',
         \ expand(g:natspecgen_path),
         \ expand(a:file),
-        \ expand(a:symbol),
+        \ a:lineno,
         \ a:indent,
         \ )
     return cmd
 endfunction
 
 function! solnatspec#insert(...) abort
-  let pos = getpos('.')
-
-  let line = getline('.')
-  let indent = matchstr(line, '^\(\s*\)')
+  let line = line('.')
+  let linedata = getline('.')
+  let indent = matchstr(linedata, '^\(\s*\)')
 
   let symbol = expand('<cword>')
 
-  let cmd = s:create_cmd(expand('%'), symbol, len(indent))
+  let cmd = s:create_cmd(expand('%'), line, len(indent))
 
   execute 'normal!k'
   echo cmd
