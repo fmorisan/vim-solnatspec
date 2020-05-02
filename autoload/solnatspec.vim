@@ -8,8 +8,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:solnatspec_template = get(g:, 'pydocstring_templates_path', '')
-let g:solnatspec_formatter = get(g:, 'pydocstring_formatter', 'sphinx')
 let g:solc_path = get(
   \ g:,
   \ 'solc_path',
@@ -24,10 +22,10 @@ let g:natspecgen_path = get(
 " Magic starts here. Calling solc --ast-json...
 function! s:create_cmd(file, lineno, indent) abort
     let cmd = printf(
-        \ 'python3 %s %s %s --indent %d',
+        \ 'python3 %s %s %d --indent %d',
         \ expand(g:natspecgen_path),
         \ expand(a:file),
-        \ expand(a:lineno),
+        \ a:lineno,
         \ a:indent,
         \ )
     return cmd
@@ -42,9 +40,8 @@ function! solnatspec#insert(...) abort
 
   let cmd = s:create_cmd(expand('%'), line, len(indent))
 
-  execute 'normal!k'
   echo cmd
-  exec 'read!' . expand(cmd)
+  exec 'normal!kr!' . expand(cmd)
 
   let g:solnatspec_lastcmd = cmd
 
